@@ -2,17 +2,18 @@ name: Regenerate Mermaid Diagrams
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'diagrams/**/*.mmd'
-   
+  workflow_dispatch: {}  # allow manual runs for debugging
+
+permissions:
+  contents: write
 
 jobs:
   update-diagrams:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      pull-requests: write   # allow committing changes back
 
     steps:
       - name: Checkout repository
@@ -26,20 +27,32 @@ jobs:
       - name: Install Mermaid CLI
         run: npm install -g @mermaid-js/mermaid-cli
 
-      - name: Generate PNGs from Mermaid files
+      - name: Generate PNGs from Mermaid files (no-sandbox)
         run: |
+          echo "Using puppeteer config: puppeteer-config.json"
+          if [ ! -f ./puppeteer-config.json ]; then
+            echo "ERROR: puppeteer-config.json not found at repo root. Expecting file at ./puppeteer-config.json"
+            exit 1
+          fi
+
           mkdir -p diagrams
+          shopt -s nullglob
           for file in diagrams/*.mmd; do
             png="${file%.mmd}.png"
-            mmdc -i "$file" -o "$png"
+            echo "Rendering $file -> $png"
+            # use -p to pass the puppeteer config (contains --no-sandbox)
+            mmdc -p ./puppeteer-config.json -i "$file" -o "$png" || {
+              echo "::error::mmdc failed for $file"
+              exit 1
+            }
           done
 
-      - name: Setup Python (for index script)
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install YAML library
+      - name: Install Python deps
         run: pip install pyyaml
 
       - name: Update diagram index YAML
@@ -48,5 +61,7 @@ jobs:
       - name: Commit updated diagrams and index
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "Update Mermaid diagram images and index"
-          file_pattern: 'diagrams/* index.yml'
+          commit_message: "CI: update Mermaid PNGs and index"
+          file_pattern: |
+            diagrams/*
+            index.yml
