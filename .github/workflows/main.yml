@@ -1,4 +1,4 @@
-name: Regenerate Mermaid Diagrams
+name: Regenerate Mermaid Diagrams (SVG + PNG)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'diagrams/**/*.mmd'
-  workflow_dispatch: {}  # allow manual runs for debugging
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -19,33 +19,52 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Show runner info
+        run: |
+          echo "Running on $(uname -a)"
+          echo "Node version:"
+          node --version || true
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
       - name: Install Mermaid CLI
-        run: npm install -g @mermaid-js/mermaid-cli
-
-      - name: Generate PNGs from Mermaid files (no-sandbox)
         run: |
-          echo "Using puppeteer config: puppeteer-config.json"
-          if [ ! -f ./puppeteer-config.json ]; then
-            echo "ERROR: puppeteer-config.json not found at repo root. Expecting file at ./puppeteer-config.json"
-            exit 1
-          fi
+          npm install -g @mermaid-js/mermaid-cli
+          mmdc -h || true
 
+      - name: Ensure puppeteer-config.json exists
+        run: |
+          if [ ! -f ./puppeteer-config.json ]; then
+            echo "Creating puppeteer-config.json with --no-sandbox flags"
+            cat > ./puppeteer-config.json <<'EOF'
+            {
+              "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+            }
+            EOF
+          else
+            echo "puppeteer-config.json found"
+          fi
+          cat ./puppeteer-config.json
+
+      - name: Generate SVG and PNG from Mermaid files (no-sandbox)
+        run: |
+          set -e
           mkdir -p diagrams
           shopt -s nullglob
           for file in diagrams/*.mmd; do
-            png="${file%.mmd}.png"
-            echo "Rendering $file -> $png"
-            # use -p to pass the puppeteer config (contains --no-sandbox)
-            mmdc -p ./puppeteer-config.json -i "$file" -o "$png" || {
-              echo "::error::mmdc failed for $file"
-              exit 1
-            }
+            base="${file%.mmd}"
+            svg="${base}.svg"
+            png="${base}.png"
+            echo "Rendering $file -> $svg and $png"
+            # Render SVG
+            mmdc -p ./puppeteer-config.json -i "$file" -o "$svg" || { echo "::error::mmdc failed (svg) for $file"; exit 1; }
+            # Render PNG
+            mmdc -p ./puppeteer-config.json -i "$file" -o "$png" || { echo "::error::mmdc failed (png) for $file"; exit 1; }
           done
+        shell: bash
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -55,13 +74,21 @@ jobs:
       - name: Install Python deps
         run: pip install pyyaml
 
-      - name: Update diagram index YAML
-        run: python scripts/update_index.py
+      - name: Run index update script
+        run: |
+          python scripts/update_index.py
+
+      - name: Show resulting index.yml and diagrams
+        run: |
+          echo "---- index.yml ----"
+          sed -n '1,200p' index.yml || true
+          echo "---- diagrams listing ----"
+          ls -la diagrams || true
 
       - name: Commit updated diagrams and index
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "CI: update Mermaid PNGs and index"
+          commit_message: "CI: update Mermaid SVG/PNG and index"
           file_pattern: |
             diagrams/*
             index.yml
