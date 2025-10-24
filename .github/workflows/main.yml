@@ -4,13 +4,16 @@ on:
   push:
     paths:
       - 'diagrams/**/*.mmd'
+    branches:
+      - main  
 
 jobs:
   update-diagrams:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write   # allow committing changes back
+      contents: write
+      pull-requests: write   # allow committing changes back
 
     steps:
       - name: Checkout repository
