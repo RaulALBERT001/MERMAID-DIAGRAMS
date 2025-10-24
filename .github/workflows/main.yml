@@ -1,4 +1,4 @@
-name: Regenerate Mermaid Diagrams (SVG + high-res PNG)
+name: Regenerate Mermaid Diagrams (SVG + high-res PNG + inverted)
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 env:
-  PNG_SCALE: '3'   # ajuste aqui para 2,3,4 conforme desejar
+  PNG_SCALE: '3'   # ajuste aqui (2/3/4) conforme necessidade
 
 jobs:
   update-diagrams:
@@ -33,45 +33,94 @@ jobs:
           echo "mmdc version:"
           mmdc -v || true
 
+      - name: Install ImageMagick (for PNG inversion)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          echo "ImageMagick version:"
+          convert --version || magick --version || true
 
-      - name: Generate SVG and high-res PNG from Mermaid files (no-sandbox) + validate
+      - name: Generate SVG, PNG and their inverted variants (validate)
         run: |
           set -euo pipefail
           mkdir -p diagrams logs
           shopt -s nullglob
           echo "Using PNG_SCALE=${PNG_SCALE}"
+
+          # small helper script for inverting SVG by injecting feColorMatrix
+          cat > /tmp/invert_svg.py <<'PY'
+          import sys
+          infile = sys.argv[1]
+          outfile = sys.argv[2]
+          s = open(infile, 'r', encoding='utf-8').read()
+          i = s.find('<svg')
+          if i == -1:
+              print('ERROR: no <svg tag found in', infile)
+              sys.exit(2)
+          start = s.find('>', i)
+          if start == -1:
+              print('ERROR: malformed svg in', infile)
+              sys.exit(2)
+          insert = '''
+          <defs><filter id="invert"><feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0"/></filter></defs>
+          <g filter="url(#invert)">
+          '''
+          s2 = s[:start+1] + insert + s[start+1:]
+          # close group before final </svg> (replace last occurrence)
+          idx_close = s2.rfind('</svg>')
+          if idx_close == -1:
+              print('ERROR: cannot find </svg> in', infile)
+              sys.exit(2)
+          s2 = s2[:idx_close] + '</g>' + s2[idx_close:]
+          open(outfile, 'w', encoding='utf-8').write(s2)
+          print('WROTE', outfile)
+          PY
+
           for file in diagrams/*.mmd; do
             base="${file%.mmd}"
             svg="${base}.svg"
             png="${base}.png"
-            logfile="logs/$(basename "${base}").mmdc.log"
+            svg_inv="${base}-inverted.svg"
+            png_inv="${base}-inverted.png"
+            logf="logs/$(basename "${base}").mmdc.log"
 
             echo "Rendering $file -> $svg"
-            if ! mmdc -p ./puppeteer-config.json -i "$file" -o "$svg" > "${logfile}" 2>&1; then
-              echo "::error::mmdc failed while creating SVG for $file. Showing log:"
-              sed -n '1,200p' "${logfile}" || true
+            if ! mmdc -p ./puppeteer-config.json -i "$file" -o "$svg" > "${logf}" 2>&1; then
+              echo "::error::mmdc failed creating SVG for $file. Log:"
+              sed -n '1,200p' "${logf}" || true
               exit 1
             fi
 
-            # Validate SVG begins with <?xml or <svg (ignoring leading whitespace/newlines)
+            # Validate svg basic start
             header="$(sed -n '1,10p' "$svg" | tr -d '[:space:]' | head -c 10 || true)"
             if ! printf '%s' "$header" | grep -qiE '^<(\?|svg)'; then
-              echo "::error::Generated SVG for $file does not start with XML/<svg. Dumping diagnostics."
-              echo "---- first 200 bytes of $svg ----"
+              echo "::error::SVG validation failed for $svg; dumping head and log"
               head -c 200 "$svg" | sed -n '1,200p' || true
-              echo "---- mmdc log (first 200 lines) ----"
-              sed -n '1,200p' "${logfile}" || true
+              sed -n '1,200p' "${logf}" || true
               exit 1
             fi
 
             echo "Rendering $file -> $png (scale=${PNG_SCALE})"
-            if ! mmdc -p ./puppeteer-config.json -i "$file" -o "$png" --scale "${PNG_SCALE}" >> "${logfile}" 2>&1; then
-              echo "::error::mmdc failed while creating PNG for $file. Showing log:"
-              sed -n '1,200p' "${logfile}" || true
+            if ! mmdc -p ./puppeteer-config.json -i "$file" -o "$png" --scale "${PNG_SCALE}" >> "${logf}" 2>&1; then
+              echo "::error::mmdc failed creating PNG for $file. Log:"
+              sed -n '1,200p' "${logf}" || true
               exit 1
             fi
 
-            echo "Rendered: $svg (size: $(stat -c%s "$svg"))  $png (size: $(stat -c%s "$png"))"
+            # Create inverted PNG using ImageMagick (negate)
+            echo "Creating inverted PNG: $png_inv"
+            if command -v magick >/dev/null 2>&1; then
+              magick convert "$png" -channel RGB -negate "$png_inv"
+            else
+              convert "$png" -channel RGB -negate "$png_inv"
+            fi
+
+            # Create inverted SVG by injecting feColorMatrix
+            echo "Creating inverted SVG: $svg_inv"
+            python3 /tmp/invert_svg.py "$svg" "$svg_inv" || { echo "::error::Failed to invert SVG for $svg"; sed -n '1,200p' "${logf}" || true; exit 1; }
+
+            echo "Rendered artifacts: $svg (size: $(stat -c%s "$svg"))  $png (size: $(stat -c%s "$png"))"
+            echo "Inverted artifacts: $svg_inv (size: $(stat -c%s "$svg_inv"))  $png_inv (size: $(stat -c%s "$png_inv"))"
           done
         shell: bash
 
@@ -98,7 +147,7 @@ jobs:
       - name: Commit updated diagrams and index
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "CI: update Mermaid SVG + high-res PNG and index"
+          commit_message: "CI: update Mermaid SVG + high-res PNG + inverted variants and index"
           file_pattern: |
             diagrams/*
             index.yml
