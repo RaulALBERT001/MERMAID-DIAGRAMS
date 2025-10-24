@@ -4,8 +4,7 @@ on:
   push:
     paths:
       - 'diagrams/**/*.mmd'
-    branches:
-      - main  
+   
 
 jobs:
   update-diagrams:
