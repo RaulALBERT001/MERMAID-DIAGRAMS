@@ -20,15 +20,12 @@ OUT_INDEX = os.path.join(ROOT, "index.yml")
 
 def extract_frontmatter(text):
     """
-    Extract block comment between /* ... */ and return cleaned YAML text.
-    Accepts either plain YAML or lines prefixed with *.
+    Extract block between --- and --- and return cleaned YAML text.
     """
-    m = re.search(r'/\*\s*(.*?)\s*\*/', text, re.S)
+    m = re.search(r'---\s*(.*?)\s*---', text, re.S)
     if not m:
         return None
     fm = m.group(1)
-    # Remove leading '*' on lines (in case comment lines start with *)
-    fm = re.sub(r'^\s*\*\s?', '', fm, flags=re.MULTILINE)
     return fm.strip()
 
 def safe_load_yaml(yaml_text):
