@@ -1,447 +1,360 @@
 ---
-id: configuracoes-reformuladas.mmd
 title: Configuracao Sistema
-kind: mmd
-area: ConfiguracaoSistema
-version: 5
-tags:
-- configuracao
-- sistema
-- bar
-- comercial
-- comercial1
-- producao
-- logistica
-owner: admin
-ai_generator: GROK4
-prompt_file: prompts/standard.prompt.md
-prompt_hash: 0fec5dcec6ec3a471d11de61a67c930005b58b4a7cab7f37d8deb8a67c7ca4be
-last_generated: 2025-10-24
-hour_last_generated: 
-related_code:
-- IConfiguracaoSistema.cs
-- BarSistema.cs
-- ComercialSistema.cs
-- ComercialSistema1.cs
-- ProducaoSistema.cs
-- LogisticaSistema.cs
 ---
-
 classDiagram
-    direction TB
-
-    namespace WindowsFormsApplication2_Configurar_Sistema {
+direction TB
+	namespace WindowsFormsApplication2_Configurar_Sistema {
         class IConfiguracaoSistema {
-            <<updated>>
-            <<partial interface>>
-            +PropertyChanged <<event>> PropertyChangedEventHandler
-            -currentControl : UserControl
-            -initialState : Dictionary~string, object~
-            -hasUnsavedChanges : bool
-            +PRCO01 : decimal
-            +PRCO02 : decimal
-            +PRCO03 : decimal
-            +PRCO04 : string
-            +PRCO05 : int
-            +PRCO06 : int
-            +PRCO07 : bool
-            +PRCO08 : bool
-            +PRCO09 : bool
-            +PRCO10 : bool
-            +PRRB01 : bool
-            +PRRB02 : bool
-            +LIRB01 : bool
-            +LIRB02 : bool
-            +LIRB03 : bool
-            +LIRB04 : bool
-            +LIRB05 : bool
-            +LICO01 : bool
-            +LICO02 : bool
-            +LICO03 : bool
-            +LICO04 : bool
-            +LICO05 : bool
-            +LICO06 : bool
-            +LICO07 : bool
-            +LICO08 : bool
-            +LICO09 : bool
-            +LICO10 : int
-            +LICO11_Futura : int
-            +LICO11_Passada : int
-            +LICO12 : int
-            +LICO13 : string
-            +LICO14 : string
-            +LICO15 : bool
-            +LIEE01 : bool
-            +LIEE02 : string
-            +LIEE03 : bool
-            +LIEE04 : bool
-            +LIEE05 : string
-            +LIEE06 : string
-            +LIEE07 : string
-            +FFIN01 : bool
-            +FFIS01 : bool
-            +FFIS02 : bool
-            +FFIS03 : bool
-            +FFIS04 : bool
-            +FFIS05 : bool
-            +FFIS06 : bool
-            +FFIS07 : bool
-            +FBOL01 : bool
-            +FBOL02 : bool
-            +FBOL03 : bool
-            +FBOL04 : bool
-            +FBOL05 : bool
-            +COCL01 : bool
-            +COCL02 : bool
-            +COCB01 : bool
-            +COCB02 : bool
-            +COCB03 : bool
-            +COCB04 : bool
-            +COCB05 : bool
-            +COCB06 : bool
-            +COCB07 : bool
-            +COCB08 : bool
-            +COCB09 : bool
-            +COCB10 : bool
-            +COCO01 : bool
-            +COCO02 : bool
-            +COCO03 : bool
-            +COCO04 : bool
-            +COCO05 : bool
-            +COCO06 : bool
-            +COCO07 : bool
-            +COCO08 : bool
-            +COCO09 : bool
-            +COCO10 : bool
-            +COCO11N : bool
-            +COCO12N : bool
-            +COCO11 : string
-            +COCO13 : string
-            +COCO17 : DateTime
-            +BACG01 : string
-            +BACG02 : string
-            +BACG03 : string
-            +BACG04 : string
-            +BACG05 : string
-            +BACG06 : int
-            +BACG07 : string
-            +BACG08 : string
-            +BACG09 : string
-            +BACG10 : string
-            +BACO01 : bool
-            +BACO02 : bool
-            +BACO03 : bool
-            +BACO04 : bool
-            +BACO05 : bool
-            +BACO06 : bool
-            +BACO07 : bool
-            +BACO08 : bool
-            +BACO09 : bool
-            +BACO10 : bool
-            +BACO11 : bool
-            +BACO12 : bool
-            +BAIM01 : bool
-            +BAIM02 : bool
-            +BAIM03 : bool
-            +BAIM04 : bool
-            +BAIM05 : bool
-            +BAIM06 : bool
-            +BAIM07 : bool
-            +BAIM08 : bool
-            +BAIM09 : bool
-            +BAIM10 : bool
-            #OnPropertyChanged(string) void
-            +IConfiguracaoSistema()
-            +Salvar() void
-            +Salvar_Producao(SqlConnection, SqlTransaction) void
-            +Salvar_Logistica(SqlConnection, SqlTransaction) void
-            +Salvar_Comercial(SqlConnection, SqlTransaction) void
-            +Salvar_Comercial1(SqlConnection, SqlTransaction) void
-            +Salvar_Bar(SqlConnection, SqlTransaction) void
-            +Buscar_Configuracao_Producao() void
-            +Buscar_Configuracao_Logistica() void
-            +Buscar_Configuracao_Comercial() void
-            +Buscar_Configuracao_Comercial1() void
-            +Buscar_Configuracao_Bar() void
+	        +PropertyChanged ~~ PropertyChangedEventHandler
+	        -currentControl : UserControl
+	        -initialState : Dictionary~string, object~
+	        -hasUnsavedChanges : bool
+	        +PRCO01 : decimal
+	        +PRCO02 : decimal
+	        +PRCO03 : decimal
+	        +PRCO04 : string
+	        +PRCO05 : int
+	        +PRCO06 : int
+	        +PRCO07 : bool
+	        +PRCO08 : bool
+	        +PRCO09 : bool
+	        +PRCO10 : bool
+	        +PRRB01 : bool
+	        +PRRB02 : bool
+	        +LIRB01 : bool
+	        +LIRB02 : bool
+	        +LIRB03 : bool
+	        +LIRB04 : bool
+	        +LIRB05 : bool
+	        +LICO01 : bool
+	        +LICO02 : bool
+	        +LICO03 : bool
+	        +LICO04 : bool
+	        +LICO05 : bool
+	        +LICO06 : bool
+	        +LICO07 : bool
+	        +LICO08 : bool
+	        +LICO09 : bool
+	        +LICO10 : int
+	        +LICO11_Futura : int
+	        +LICO11_Passada : int
+	        +LICO12 : int
+	        +LICO13 : string
+	        +LICO14 : string
+	        +LICO15 : bool
+	        +LIEE01 : bool
+	        +LIEE02 : string
+	        +LIEE03 : bool
+	        +LIEE04 : bool
+	        +LIEE05 : string
+	        +LIEE06 : string
+	        +LIEE07 : string
+	        +FFIN01 : bool
+	        +FFIS01 : bool
+	        +FFIS02 : bool
+	        +FFIS03 : bool
+	        +FFIS04 : bool
+	        +FFIS05 : bool
+	        +FFIS06 : bool
+	        +FFIS07 : bool
+	        +FBOL01 : bool
+	        +FBOL02 : bool
+	        +FBOL03 : bool
+	        +FBOL04 : bool
+	        +FBOL05 : bool
+	        +COCL01 : bool
+	        +COCL02 : bool
+	        +COCB01 : bool
+	        +COCB02 : bool
+	        +COCB03 : bool
+	        +COCB04 : bool
+	        +COCB05 : bool
+	        +COCB06 : bool
+	        +COCB07 : bool
+	        +COCB08 : bool
+	        +COCB09 : bool
+	        +COCB10 : bool
+	        +COCO01 : bool
+	        +COCO02 : bool
+	        +COCO03 : bool
+	        +COCO04 : bool
+	        +COCO05 : bool
+	        +COCO06 : bool
+	        +COCO07 : bool
+	        +COCO08 : bool
+	        +COCO09 : bool
+	        +COCO10 : bool
+	        +COCO11N : bool
+	        +COCO12N : bool
+	        +COCO11 : string
+	        +COCO13 : string
+	        +COCO17 : DateTime
+	        +BACG01 : string
+	        +BACG02 : string
+	        +BACG03 : string
+	        +BACG04 : string
+	        +BACG05 : string
+	        +BACG06 : int
+	        +BACG07 : string
+	        +BACG08 : string
+	        +BACG09 : string
+	        +BACG10 : string
+	        +BACO01 : bool
+	        +BACO02 : bool
+	        +BACO03 : bool
+	        +BACO04 : bool
+	        +BACO05 : bool
+	        +BACO06 : bool
+	        +BACO07 : bool
+	        +BACO08 : bool
+	        +BACO09 : bool
+	        +BACO10 : bool
+	        +BACO11 : bool
+	        +BACO12 : bool
+	        +BAIM01 : bool
+	        +BAIM02 : bool
+	        +BAIM03 : bool
+	        +BAIM04 : bool
+	        +BAIM05 : bool
+	        +BAIM06 : bool
+	        +BAIM07 : bool
+	        +BAIM08 : bool
+	        +BAIM09 : bool
+	        +BAIM10 : bool
+	        #OnPropertyChanged(string) void
+	        +IConfiguracaoSistema()
+	        +Salvar() void
+	        +Salvar_Producao(SqlConnection, SqlTransaction) void
+	        +Salvar_Logistica(SqlConnection, SqlTransaction) void
+	        +Salvar_Comercial(SqlConnection, SqlTransaction) void
+	        +Salvar_Comercial1(SqlConnection, SqlTransaction) void
+	        +Salvar_Bar(SqlConnection, SqlTransaction) void
+	        +Buscar_Configuracao_Producao() void
+	        +Buscar_Configuracao_Logistica() void
+	        +Buscar_Configuracao_Comercial() void
+	        +Buscar_Configuracao_Comercial1() void
+	        +Buscar_Configuracao_Bar() void
         }
-
         class BarSistema {
-            <<updated>>
-            <<partial UserControl>>
-            -configuracao : IConfiguracaoSistema
-            +BarSistema(IConfiguracaoSistema)
-            +Lista_Empresas() void
-            +Buscar_CFOP() void
-            -Chk_CheckedChanged(object, EventArgs) void
-            +DesmarcarTodos() void
-            +Atualizar() void
-            -panelImpressao_Paint(object, PaintEventArgs) void
-            -lblBACO11_Click(object, EventArgs) void
-            <<event>> cmbBACG01_SelectedIndexChanged
-            <<event>> cmbBACG02_SelectedIndexChanged
-            <<event>> cmbBACG03_SelectedIndexChanged
-            <<event>> cmbBACG04_SelectedIndexChanged
-            <<event>> cmbBACG05_SelectedIndexChanged
-            <<event>> txtBACG06_TextChanged
-            <<event>> cmbBACG07_SelectedIndexChanged
-            <<event>> cmbBACG08_SelectedIndexChanged
-            <<event>> cmbBACG09_SelectedIndexChanged
-            <<event>> txtBACG10_TextChanged
-            <<event>> chkBACO01_CheckedChanged
-            <<event>> chkBACO02_CheckedChanged
-            <<event>> chkBACO03_CheckedChanged
-            <<event>> chkBACO04_CheckedChanged
-            <<event>> chkBACO05_CheckedChanged
-            <<event>> chkBACO06_CheckedChanged
-            <<event>> chkBACO07_CheckedChanged
-            <<event>> chkBACO08_CheckedChanged
-            <<event>> chkBACO09_CheckedChanged
-            <<event>> chkBACO10_CheckedChanged
-            <<event>> chkBACO11_CheckedChanged
-            <<event>> chkBACO12_CheckedChanged
-            <<event>> chkBAIM01_CheckedChanged
-            <<event>> chkBAIM02_CheckedChanged
-            <<event>> chkBAIM03_CheckedChanged
-            <<event>> chkBAIM04_CheckedChanged
-            <<event>> chkBAIM05_CheckedChanged
-            <<event>> chkBAIM06_CheckedChanged
-            <<event>> chkBAIM07_CheckedChanged
-            <<event>> chkBAIM08_CheckedChanged
-            <<event>> chkBAIM09_CheckedChanged
-            <<event>> chkBAIM10_CheckedChanged
+	        -configuracao : IConfiguracaoSistema
+	        ~~ cmbBACG01_SelectedIndexChanged
+	        ~~ cmbBACG02_SelectedIndexChanged
+	        ~~ cmbBACG03_SelectedIndexChanged
+	        ~~ cmbBACG04_SelectedIndexChanged
+	        ~~ cmbBACG05_SelectedIndexChanged
+	        ~~ txtBACG06_TextChanged
+	        ~~ cmbBACG07_SelectedIndexChanged
+	        ~~ cmbBACG08_SelectedIndexChanged
+	        ~~ cmbBACG09_SelectedIndexChanged
+	        ~~ txtBACG10_TextChanged
+	        ~~ chkBACO01_CheckedChanged
+	        ~~ chkBACO02_CheckedChanged
+	        ~~ chkBACO03_CheckedChanged
+	        ~~ chkBACO04_CheckedChanged
+	        ~~ chkBACO05_CheckedChanged
+	        ~~ chkBACO06_CheckedChanged
+	        ~~ chkBACO07_CheckedChanged
+	        ~~ chkBACO08_CheckedChanged
+	        ~~ chkBACO09_CheckedChanged
+	        ~~ chkBACO10_CheckedChanged
+	        ~~ chkBACO11_CheckedChanged
+	        ~~ chkBACO12_CheckedChanged
+	        ~~ chkBAIM01_CheckedChanged
+	        ~~ chkBAIM02_CheckedChanged
+	        ~~ chkBAIM03_CheckedChanged
+	        ~~ chkBAIM04_CheckedChanged
+	        ~~ chkBAIM05_CheckedChanged
+	        ~~ chkBAIM06_CheckedChanged
+	        ~~ chkBAIM07_CheckedChanged
+	        ~~ chkBAIM08_CheckedChanged
+	        ~~ chkBAIM09_CheckedChanged
+	        ~~ chkBAIM10_CheckedChanged
+	        +BarSistema(IConfiguracaoSistema)
+	        +Lista_Empresas() void
+	        +Buscar_CFOP() void
+	        -Chk_CheckedChanged(object, EventArgs) void
+	        +DesmarcarTodos() void
+	        +Atualizar() void
+	        -panelImpressao_Paint(object, PaintEventArgs) void
+	        -lblBACO11_Click(object, EventArgs) void
         }
-
         class ComercialSistema {
-            <<updated>>
-            <<partial UserControl>>
-            -configuracao : IConfiguracaoSistema
-            +ComercialSistema(IConfiguracaoSistema)
-            -Chk_CheckedChanged(object, EventArgs) void
-            +DesmarcarTodos() void
-            +Atualizar() void
-            -panel5_Paint(object, PaintEventArgs) void
-            -label4_Click(object, EventArgs) void
-            -label6_Click(object, EventArgs) void
-            -panel6_Paint(object, PaintEventArgs) void
-            -panelFiscal_Paint(object, PaintEventArgs) void
-            -chkFFIS01_CheckedChanged(object, EventArgs) void
-            -chkFFIS05_CheckedChanged(object, EventArgs) void
-            -checkFFIS07_CheckedChanged(object, EventArgs) void
-            -CreateSpecialConfigurationsPanel() void
-            <<event>> chkFFIN01_CheckedChanged
-            <<event>> chkFFIS01_CheckedChanged
-            <<event>> chkFFIS02_CheckedChanged
-            <<event>> chkFFIS03_CheckedChanged
-            <<event>> chkFFIS04_CheckedChanged
-            <<event>> chkFFIS05_CheckedChanged
-            <<event>> chkFFIS06_CheckedChanged
-            <<event>> checkFFIS07_CheckedChanged
-            <<event>> chkFBOL01_CheckedChanged
-            <<event>> chkFBOL02_CheckedChanged
-            <<event>> chkFBOL03_CheckedChanged
-            <<event>> chkFBOL04_CheckedChanged
-            <<event>> chkFBOL05_CheckedChanged
+	        -configuracao : IConfiguracaoSistema
+	        ~~ chkFFIN01_CheckedChanged
+	        ~~ chkFFIS01_CheckedChanged
+	        ~~ chkFFIS02_CheckedChanged
+	        ~~ chkFFIS03_CheckedChanged
+	        ~~ chkFFIS04_CheckedChanged
+	        ~~ chkFFIS05_CheckedChanged
+	        ~~ chkFFIS06_CheckedChanged
+	        ~~ checkFFIS07_CheckedChanged
+	        ~~ chkFBOL01_CheckedChanged
+	        ~~ chkFBOL02_CheckedChanged
+	        ~~ chkFBOL03_CheckedChanged
+	        ~~ chkFBOL04_CheckedChanged
+	        ~~ chkFBOL05_CheckedChanged
+	        +ComercialSistema(IConfiguracaoSistema)
+	        -Chk_CheckedChanged(object, EventArgs) void
+	        +DesmarcarTodos() void
+	        +Atualizar() void
+	        -panel5_Paint(object, PaintEventArgs) void
+	        -label4_Click(object, EventArgs) void
+	        -label6_Click(object, EventArgs) void
+	        -panel6_Paint(object, PaintEventArgs) void
+	        -panelFiscal_Paint(object, PaintEventArgs) void
+	        -chkFFIS01_CheckedChanged(object, EventArgs) void
+	        -chkFFIS05_CheckedChanged(object, EventArgs) void
+	        -checkFFIS07_CheckedChanged(object, EventArgs) void
+	        -CreateSpecialConfigurationsPanel() void
         }
-
         class ComercialSistema1 {
-            <<updated>>
-            <<partial UserControl>>
-            -configuracao : IConfiguracaoSistema
-            +ComercialSistema1(IConfiguracaoSistema)
-            -Chk_CheckedChanged(object, EventArgs) void
-            -Txt_TextChanged(object, EventArgs) void
-            -DtCOCO17_ValueChanged(object, EventArgs) void
-            -BtnConfigurar_Click(object, EventArgs) void
-            -BtnBuscarImagem_Click(object, EventArgs) void
-            -CarregarLogo() void
-            -ImageToByteArray(Image) byte[]
-            +DesmarcarTodos() void
-            +Atualizar() void
-            -CreateSpecialConfigurationsPanel() void
-            -panelRestricoes_Paint(object, PaintEventArgs) void
-            <<event>> chkCOCL01_CheckedChanged
-            <<event>> chkCOCL02_CheckedChanged
-            <<event>> chkCOCB01_CheckedChanged
-            <<event>> chkCOCB02_CheckedChanged
-            <<event>> chkCOCB03_CheckedChanged
-            <<event>> chkCOCB04_CheckedChanged
-            <<event>> chkCOCB05_CheckedChanged
-            <<event>> chkCOCB06_CheckedChanged
-            <<event>> chkCOCB07_CheckedChanged
-            <<event>> chkCOCB08_CheckedChanged
-            <<event>> chkCOCB09_CheckedChanged
-            <<event>> chkCOCB10_CheckedChanged
-            <<event>> chkCOCO01_CheckedChanged
-            <<event>> chkCOCO02_CheckedChanged
-            <<event>> chkCOCO03_CheckedChanged
-            <<event>> chkCOCO04_CheckedChanged
-            <<event>> chkCOCO05_CheckedChanged
-            <<event>> chkCOCO06_CheckedChanged
-            <<event>> chkCOCO07_CheckedChanged
-            <<event>> chkCOCO08_CheckedChanged
-            <<event>> chkCOCO09_CheckedChanged
-            <<event>> chkCOCO10_CheckedChanged
-            <<event>> chkCOCO11_CheckedChanged
-            <<event>> chkCOCO12_CheckedChanged
-            <<event>> txtCOCO12_TextChanged
-            <<event>> dtCOCO17_ValueChanged
-            <<event>> btnConfigurar_Click
-            <<event>> btnCOCO14_Click
-            <<event>> btnConfigurarPedidooClausula_Click
+	        -configuracao : IConfiguracaoSistema
+	        ~~ chkCOCL01_CheckedChanged
+	        ~~ chkCOCL02_CheckedChanged
+	        ~~ chkCOCB01_CheckedChanged
+	        ~~ chkCOCB02_CheckedChanged
+	        ~~ chkCOCB03_CheckedChanged
+	        ~~ chkCOCB04_CheckedChanged
+	        ~~ chkCOCB05_CheckedChanged
+	        ~~ chkCOCB06_CheckedChanged
+	        ~~ chkCOCB07_CheckedChanged
+	        ~~ chkCOCB08_CheckedChanged
+	        ~~ chkCOCB09_CheckedChanged
+	        ~~ chkCOCB10_CheckedChanged
+	        ~~ chkCOCO01_CheckedChanged
+	        ~~ chkCOCO02_CheckedChanged
+	        ~~ chkCOCO03_CheckedChanged
+	        ~~ chkCOCO04_CheckedChanged
+	        ~~ chkCOCO05_CheckedChanged
+	        ~~ chkCOCO06_CheckedChanged
+	        ~~ chkCOCO07_CheckedChanged
+	        ~~ chkCOCO08_CheckedChanged
+	        ~~ chkCOCO09_CheckedChanged
+	        ~~ chkCOCO10_CheckedChanged
+	        ~~ chkCOCO11_CheckedChanged
+	        ~~ chkCOCO12_CheckedChanged
+	        ~~ txtCOCO12_TextChanged
+	        ~~ dtCOCO17_ValueChanged
+	        ~~ btnConfigurar_Click
+	        ~~ btnCOCO14_Click
+	        ~~ btnConfigurarPedidooClausula_Click
+	        +ComercialSistema1(IConfiguracaoSistema)
+	        -Chk_CheckedChanged(object, EventArgs) void
+	        -Txt_TextChanged(object, EventArgs) void
+	        -DtCOCO17_ValueChanged(object, EventArgs) void
+	        -BtnConfigurar_Click(object, EventArgs) void
+	        -BtnBuscarImagem_Click(object, EventArgs) void
+	        -CarregarLogo() void
+	        -ImageToByteArray(Image) byte[]
+	        +DesmarcarTodos() void
+	        +Atualizar() void
+	        -CreateSpecialConfigurationsPanel() void
+	        -panelRestricoes_Paint(object, PaintEventArgs) void
         }
-
         class ProducaoSistema {
-            <<updated>>
-            <<partial UserControl>>
-            -configuracao : IConfiguracaoSistema
-            +ProducaoSistema(IConfiguracaoSistema)
-            -Chk_CheckedChanged(object, EventArgs) void
-            +DesmarcarTodos() void
-            +Atualizar() void
-            -txtPRCO01_TextChanged(object, EventArgs) void
-            -txtPRCO02_Leave(object, EventArgs) void
-            -txtPRCO03_TextChanged(object, EventArgs) void
-            -cmbPRCO04_SelectedIndexChanged(object, EventArgs) void
-            -txtPRCO05_TextChanged(object, EventArgs) void
-            -txtPRCO06_TextChanged(object, EventArgs) void
-            -chkPRCO07_CheckedChanged(object, EventArgs) void
-            -chkPRCO08_CheckedChanged(object, EventArgs) void
-            -chkPRCO09_CheckedChanged(object, EventArgs) void
-            -chkPRCO10_CheckedChanged(object, EventArgs) void
-            -chkPRRB01_CheckedChanged(object, EventArgs) void
-            -chkPRRB02_CheckedChanged(object, EventArgs) void
-            -label12_Click(object, EventArgs) void
-            -panel1_Paint(object, PaintEventArgs) void
-            -label14_Click(object, EventArgs) void
-            -label5_Click(object, EventArgs) void
-            <<event>> txtPRCO01_TextChanged
-            <<event>> txtPRCO02_Leave
-            <<event>> txtPRCO03_TextChanged
-            <<event>> cmbPRCO04_SelectedIndexChanged
-            <<event>> txtPRCO05_TextChanged
-            <<event>> txtPRCO06_TextChanged
-            <<event>> chkPRCO07_CheckedChanged
-            <<event>> chkPRCO08_CheckedChanged
-            <<event>> chkPRCO09_CheckedChanged
-            <<event>> chkPRCO10_CheckedChanged
-            <<event>> chkPRRB01_CheckedChanged
-            <<event>> chkPRRB02_CheckedChanged
+	        -configuracao : IConfiguracaoSistema
+	        ~~ txtPRCO01_TextChanged
+	        ~~ txtPRCO02_Leave
+	        ~~ txtPRCO03_TextChanged
+	        ~~ cmbPRCO04_SelectedIndexChanged
+	        ~~ txtPRCO05_TextChanged
+	        ~~ txtPRCO06_TextChanged
+	        ~~ chkPRCO07_CheckedChanged
+	        ~~ chkPRCO08_CheckedChanged
+	        ~~ chkPRCO09_CheckedChanged
+	        ~~ chkPRCO10_CheckedChanged
+	        ~~ chkPRRB01_CheckedChanged
+	        ~~ chkPRRB02_CheckedChanged
+	        +ProducaoSistema(IConfiguracaoSistema)
+	        -Chk_CheckedChanged(object, EventArgs) void
+	        +DesmarcarTodos() void
+	        +Atualizar() void
+	        -txtPRCO01_TextChanged(object, EventArgs) void
+	        -txtPRCO02_Leave(object, EventArgs) void
+	        -txtPRCO03_TextChanged(object, EventArgs) void
+	        -cmbPRCO04_SelectedIndexChanged(object, EventArgs) void
+	        -txtPRCO05_TextChanged(object, EventArgs) void
+	        -txtPRCO06_TextChanged(object, EventArgs) void
+	        -chkPRCO07_CheckedChanged(object, EventArgs) void
+	        -chkPRCO08_CheckedChanged(object, EventArgs) void
+	        -chkPRCO09_CheckedChanged(object, EventArgs) void
+	        -chkPRCO10_CheckedChanged(object, EventArgs) void
+	        -chkPRRB01_CheckedChanged(object, EventArgs) void
+	        -chkPRRB02_CheckedChanged(object, EventArgs) void
+	        -label12_Click(object, EventArgs) void
+	        -panel1_Paint(object, PaintEventArgs) void
+	        -label14_Click(object, EventArgs) void
+	        -label5_Click(object, EventArgs) void
         }
-
         class LogisticaSistema {
-            <<updated>>
-            <<partial UserControl>>
-            -configuracao : IConfiguracaoSistema
-            +LogisticaSistema(IConfiguracaoSistema)
-            -Chk_CheckedChanged(object, EventArgs) void
-            +DesmarcarTodos() void
-            +Atualizar() void
-            -txtLICO10_TextChanged(object, EventArgs) void
-            -txtLICO10_Leave(object, EventArgs) void
-            -txtLICO11_Futura_TextChanged(object, EventArgs) void
-            -txtLICO11_Futura_Leave(object, EventArgs) void
-            -txtLICO11_Passada_TextChanged(object, EventArgs) void
-            -txtLICO11_Passada_Leave(object, EventArgs) void
-            -txtLICO12_TextChanged(object, EventArgs) void
-            -txtLICO12_Leave(object, EventArgs) void
-            -cmbLICO13_SelectedIndexChanged(object, EventArgs) void
-            -txtLICO14_TextChanged(object, EventArgs) void
-            -txtLIEE02_TextChanged(object, EventArgs) void
-            -txtLIEE05_TextChanged(object, EventArgs) void
-            -txtLIEE06_TextChanged(object, EventArgs) void
-            -txtLIEE07_TextChanged(object, EventArgs) void
-            -btnConfigurarRoteirizacaoJSON_Click(object, EventArgs) void
-            <<event>> chkLIRB01_CheckedChanged
-            <<event>> chkLIRB02_CheckedChanged
-            <<event>> chkLIRB03_CheckedChanged
-            <<event>> chkLIRB04_CheckedChanged
-            <<event>> chkLIRB05_CheckedChanged
-            <<event>> chkLICO01_CheckedChanged
-            <<event>> chkLICO02_CheckedChanged
-            <<event>> chkLICO03_CheckedChanged
-            <<event>> chkLICO04_CheckedChanged
-            <<event>> chkLICO05_CheckedChanged
-            <<event>> chkLICO06_CheckedChanged
-            <<event>> chkLICO07_CheckedChanged
-            <<event>> chkLICO08_CheckedChanged
-            <<event>> chkLICO09_CheckedChanged
-            <<event>> chkLIEE01_CheckedChanged
-            <<event>> chkLIEE03_CheckedChanged
-            <<event>> chkLIEE04_CheckedChanged
-            <<event>> chkLICO15_CheckedChanged
-            <<event>> txtLICO10_TextChanged
-            <<event>> txtLICO11_Futura_TextChanged
-            <<event>> txtLICO11_Passada_TextChanged
-            <<event>> txtLICO12_TextChanged
-            <<event>> cmbLICO13_SelectedIndexChanged
-            <<event>> txtLICO14_TextChanged
-            <<event>> txtLIEE02_TextChanged
-            <<event>> txtLIEE05_TextChanged
-            <<event>> txtLIEE06_TextChanged
-            <<event>> txtLIEE07_TextChanged
-            <<event>> btnConfigurarRoteirizacaoJSON_Click
+	        -configuracao : IConfiguracaoSistema
+	        ~~ chkLIRB01_CheckedChanged
+	        ~~ chkLIRB02_CheckedChanged
+	        ~~ chkLIRB03_CheckedChanged
+	        ~~ chkLIRB04_CheckedChanged
+	        ~~ chkLIRB05_CheckedChanged
+	        ~~ chkLICO01_CheckedChanged
+	        ~~ chkLICO02_CheckedChanged
+	        ~~ chkLICO03_CheckedChanged
+	        ~~ chkLICO04_CheckedChanged
+	        ~~ chkLICO05_CheckedChanged
+	        ~~ chkLICO06_CheckedChanged
+	        ~~ chkLICO07_CheckedChanged
+	        ~~ chkLICO08_CheckedChanged
+	        ~~ chkLICO09_CheckedChanged
+	        ~~ chkLIEE01_CheckedChanged
+	        ~~ chkLIEE03_CheckedChanged
+	        ~~ chkLIEE04_CheckedChanged
+	        ~~ chkLICO15_CheckedChanged
+	        ~~ txtLICO10_TextChanged
+	        ~~ txtLICO11_Futura_TextChanged
+	        ~~ txtLICO11_Passada_TextChanged
+	        ~~ txtLICO12_TextChanged
+	        ~~ cmbLICO13_SelectedIndexChanged
+	        ~~ txtLICO14_TextChanged
+	        ~~ txtLIEE02_TextChanged
+	        ~~ txtLIEE05_TextChanged
+	        ~~ txtLIEE06_TextChanged
+	        ~~ txtLIEE07_TextChanged
+	        ~~ btnConfigurarRoteirizacaoJSON_Click
+	        +LogisticaSistema(IConfiguracaoSistema)
+	        -Chk_CheckedChanged(object, EventArgs) void
+	        +DesmarcarTodos() void
+	        +Atualizar() void
+	        -txtLICO10_TextChanged(object, EventArgs) void
+	        -txtLICO10_Leave(object, EventArgs) void
+	        -txtLICO11_Futura_TextChanged(object, EventArgs) void
+	        -txtLICO11_Futura_Leave(object, EventArgs) void
+	        -txtLICO11_Passada_TextChanged(object, EventArgs) void
+	        -txtLICO11_Passada_Leave(object, EventArgs) void
+	        -txtLICO12_TextChanged(object, EventArgs) void
+	        -txtLICO12_Leave(object, EventArgs) void
+	        -cmbLICO13_SelectedIndexChanged(object, EventArgs) void
+	        -txtLICO14_TextChanged(object, EventArgs) void
+	        -txtLIEE02_TextChanged(object, EventArgs) void
+	        -txtLIEE05_TextChanged(object, EventArgs) void
+	        -txtLIEE06_TextChanged(object, EventArgs) void
+	        -txtLIEE07_TextChanged(object, EventArgs) void
+	        -btnConfigurarRoteirizacaoJSON_Click(object, EventArgs) void
         }
-    }
+	}
+    
+	<<updated>> IConfiguracaoSistema
+	<<updated>> BarSistema
+	<<updated>> ComercialSistema
+	<<updated>> ComercialSistema1
+	<<updated>> ProducaoSistema
+	<<updated>> LogisticaSistema
 
     IConfiguracaoSistema <|-- Form
     IConfiguracaoSistema ..|> INotifyPropertyChanged
     IConfiguracaoSistema --> UserControl : currentControl "0..1"
-
     BarSistema --> IConfiguracaoSistema : configuracao "1"
     ComercialSistema --> IConfiguracaoSistema : configuracao "1"
     ComercialSistema1 --> IConfiguracaoSistema : configuracao "1"
     ProducaoSistema --> IConfiguracaoSistema : configuracao "1"
     LogisticaSistema --> IConfiguracaoSistema : configuracao "1"
-
-    BarSistema ..> SqlConnection
-    BarSistema ..> SqlCommand
-    BarSistema ..> Variaveis
-    BarSistema ..> Resources
-    BarSistema ..> CheckBox
-    BarSistema ..> ComboBox
-    BarSistema ..> TextBox
-    BarSistema ..> Panel
-
-    ComercialSistema ..> Variaveis
-    ComercialSistema ..> Resources
-    ComercialSistema ..> CheckBox
-    ComercialSistema ..> Panel
-    ComercialSistema ..> Label
-    ComercialSistema ..> PictureBox
-
-    ComercialSistema1 ..> SqlConnection
-    ComercialSistema1 ..> SqlCommand
-    ComercialSistema1 ..> SqlDataReader
-    ComercialSistema1 ..> Variaveis
-    ComercialSistema1 ..> Resources  Resources
-    ComercialSistema1 ..> CheckBox
-    ComercialSistema1 ..> TextBox
-    ComercialSistema1 ..> DateTimePicker
-    ComercialSistema1 ..> Button
-    ComercialSistema1 ..> Panel
-    ComercialSistema1 ..> Label
-    ComercialSistema1 ..> PictureBox
-    ComercialSistema1 ..> OpenFileDialog
-    ComercialSistema1 ..> Image
-    ComercialSistema1 ..> MemoryStream
-    ComercialSistema1 ..> Configurar_Clausulas
-    ComercialSistema1 ..> Configurar_Clausulas_Pedido
-
-    ProducaoSistema ..> Resources
-    ProducaoSistema ..> CheckBox
-    ProducaoSistema ..> TextBox
-    ProducaoSistema ..> ComboBox
-    ProducaoSistema ..> Panel
-    ProducaoSistema ..> Label
-
-    LogisticaSistema ..> Properties
-    LogisticaSistema ..> CheckBox
-    LogisticaSistema ..> TextBox
-    LogisticaSistema ..> ComboBox
-    LogisticaSistema ..> Panel
-    LogisticaSistema ..> Label
-    LogisticaSistema ..> ChaveRoteirizacao
-
+   
     IConfiguracaoSistema ..> BarSistema : uses
     IConfiguracaoSistema ..> ComercialSistema : uses
     IConfiguracaoSistema ..> ComercialSistema1 : uses
