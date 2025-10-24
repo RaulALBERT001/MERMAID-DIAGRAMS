@@ -1,0 +1,69 @@
+---
+id: biz/config-system
+title: System Configuration Sequence
+kind: biz
+area: Configuration
+version: 1
+tags:
+- configuration
+- windows-forms
+- workflow
+owner: admin
+ai_generator: "OpenAI-GPT-5 Thinking mini"
+prompt_file: prompts/standard-sequence.prompt.md
+prompt_hash: sha256:REPLACE
+last_generated: 2025-10-24
+related_code:
+- ComercialSistema1.cs
+- ProducaoSistema.cs
+- LogisticaSistema.cs
+- ComercialSistema.cs
+- IConfiguracaoSistema.cs
+- BarSistema.cs
+---
+sequenceDiagram
+    participant User
+    participant Form as IConfiguracaoSistema
+    participant UC as UserControl
+    participant DB as Database
+    User->>Form: Open Form
+    activate Form
+    Form->>DB: Buscar_Configuracao_* (e.g., Comercial, Producao)
+    activate DB
+    DB-->>Form: Configuration Data
+    deactivate DB
+    Form->>Form: Set Properties from Reader
+    Form->>UC: Construct UserControl(this)
+    activate UC
+    UC->>UC: InitializeComponent()
+    UC->>UC: Set Event Handlers (CheckedChanged, TextChanged, etc.)
+    alt Special Configurations
+        UC->>UC: CreateSpecialConfigurationsPanel()
+    end
+    UC->>UC: Atualizar()
+    UC->>Form: Get Configuration Values
+    Form-->>UC: Property Values
+    UC->>UC: Set Checkboxes, Texts, Combos from Config
+    loop For Each Checkbox
+        UC->>UC: Chk_CheckedChanged
+        UC->>UC: Update Image and Config Property
+    end
+    Note over UC: Load Logo if Applicable
+    UC->>DB: Query Logo Base64
+    DB-->>UC: Image Data
+    UC->>UC: Set Logo Image
+    deactivate UC
+    User->>UC: Interact (e.g., Check Box)
+    activate UC
+    UC->>UC: Chk_CheckedChanged
+    UC->>Form: Update Property
+    deactivate UC
+    User->>UC: Button Click (e.g., Configurar)
+    activate UC
+    UC->>NewForm: New Dialog Form
+    NewForm->>NewForm: ShowDialog()
+    deactivate UC
+    alt Exception Occurs
+        UC->>User: Show MessageBox Error
+    end
+    deactivate Form
