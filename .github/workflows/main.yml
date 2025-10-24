@@ -35,19 +35,7 @@ jobs:
           npm install -g @mermaid-js/mermaid-cli
           mmdc -h || true
 
-      - name: Ensure puppeteer-config.json exists
-        run: |
-          if [ ! -f ./puppeteer-config.json ]; then
-            echo "Creating puppeteer-config.json with --no-sandbox flags"
-            cat > ./puppeteer-config.json <<'EOF'
-            {
-              "args": ["--no-sandbox", "--disable-setuid-sandbox"]
-            }
-            EOF
-          else
-            echo "puppeteer-config.json found"
-          fi
-          cat ./puppeteer-config.json
+      
 
       - name: Generate SVG and PNG from Mermaid files (no-sandbox)
         run: |
